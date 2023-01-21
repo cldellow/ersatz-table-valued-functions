@@ -20,6 +20,9 @@ DUMMY_FUNCTION_NAME = 'DUMMY_FUNCTION_NAME'
 #
 # The keys in `mappings` should be upper-case.
 def rewrite(sql, mappings):
+    if not might_have_function_calls_(sql, mappings):
+        return sql
+
     parsed = parse_one(sql)
 
     counter = 0
@@ -104,4 +107,14 @@ def replace_func_(expr, func_expr):
 
     return expr.transform(transformer)
 
+def might_have_function_calls_(sql, mappings):
+    # We want to be very non-invasive, so don't even try parsing the SQL unless
+    # it looks like it has a function reference in it.
+
+    upper = sql.upper()
+    for key in mappings.keys():
+        if ' {}('.format(key) in upper:
+            return True
+
+    return False
 
