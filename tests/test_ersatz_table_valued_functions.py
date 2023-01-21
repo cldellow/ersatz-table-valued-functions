@@ -1,4 +1,5 @@
 import sqlite3
+
 from ersatz_table_valued_functions import rewrite
 
 def test_rewrite_noop():
