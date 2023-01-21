@@ -37,6 +37,9 @@ def rewrite(sql, mappings):
 
             # We only support when the FROM clause has 1 entry that is a function.
 
+            if not 'from' in node.args:
+                return node
+
             from_exprs = node.args['from'].expressions
 
             if len(from_exprs) != 1:

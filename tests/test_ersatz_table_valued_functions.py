@@ -12,6 +12,17 @@ def test_rewrite_noop_unknown_function():
     candidate = 'SELECT * FROM func()'
     assert rewrite(candidate, {}) == candidate
 
+def test_rewrite_noop_unexpected_shape():
+    """More than 1 item in the FROM list should be ignored."""
+    mappings = {
+        'FUNC': ['foo', 'bar']
+    }
+
+    # Also ensure we can handle a SELECT clause with no FROM statement.
+    candidate = 'WITH xs AS (SELECT 1) SELECT foo FROM FUNC(1, 2), xs'
+    rewritten = rewrite(candidate, mappings)
+    assert candidate == rewritten
+
 def test_rewrite_case_match():
     """SQL that has a function call in it should be rewritten."""
     mappings = {
