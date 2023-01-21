@@ -1,2 +1,4 @@
-def example_function():
-    return 1 + 1
+from .rewriter import rewrite
+
+def monkey_patch(conn):
+    pass
