@@ -43,7 +43,7 @@ To use it:
 ```python
 from ersatz_table_valued_functions import rewrite
 
-rewrite('SELECT root, square FROM tbl_squares(3)', { 'tbl_squares': ['root', 'square'] })
+rewrite('SELECT root, square FROM tbl_squares(3)', { 'TBL_SQUARES': ['root', 'square'] })
 ```
 
 
