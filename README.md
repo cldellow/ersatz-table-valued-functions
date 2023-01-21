@@ -6,6 +6,8 @@
 
 A bad idea.
 
+**ersatz** *(adj.)*: made or used as a substitute, typically an inferior one, for something else.
+
 ## Installation
 
 Install this library using `pip`:
@@ -14,7 +16,36 @@ Install this library using `pip`:
 
 ## Usage
 
-Usage instructions go here.
+This library lets you rewrite queries like:
+
+```sql
+SELECT root, square FROM tbl_squares(3)
+```
+
+into queries like:
+
+```sql
+WITH _ersatz_1 AS (
+  SELECT
+    JSON_EXTRACT(value, '$[0]') AS "root",
+    JSON_EXTRACT(value, '$[1]') AS "square"
+  FROM JSON_EACH((SELECT tbl_squares(3)))
+)
+SELECT root, square FROM _ersatz_1
+```
+
+That is: it translates a query that _looks_ like it needs a table-valued function
+into one that uses a scalar-valued function that returns a JSON 2D array.
+
+
+To use it:
+
+```python
+from ersatz_table_valued_functions import rewrite
+
+rewrite('SELECT root, square FROM tbl_squares(3)', { 'tbl_squares': ['root', 'square'] })
+```
+
 
 ## Development
 
