@@ -8,6 +8,8 @@ A bad idea.
 
 **ersatz** *(adj.)*: made or used as a substitute, typically an inferior one, for something else.
 
+See also [datasette-ersatz-tablue-valued-functions](https://github.com/cldellow/datasette-ersatz-table-valued-functions/).
+
 ## Installation
 
 Install this library using `pip`:
